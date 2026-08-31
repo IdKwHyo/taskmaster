@@ -13,7 +13,8 @@
     "test": "npm run build && node --test tests/rendered-html.test.mjs && node --experimental-strip-types --test tests/prototype-runner.test.ts tests/henry-command.test.ts tests/invite-route.test.ts tests/calendar-sync.test.ts",
     "validate:artifact": "bash scripts/validate-artifact.sh",
     "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next",
-    "db:generate": "bash scripts/sites-env.sh -- drizzle-kit generate"
+    "db:generate": "bash scripts/sites-env.sh -- drizzle-kit generate",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",
