@@ -23,8 +23,8 @@ gcloud run deploy henry-worker \
   --no-allow-unauthenticated \
   --cpu=1 \
   --memory=512Mi \
-  --min=0 \
-  --max=3 \
+  --min-instances=0 \
+  --max-instances=3 \
   --set-secrets="${COMMON_SECRETS}" \
   --set-env-vars="${COMMON_ENV},HENRY_SERVICE_ROLE=worker,HENRY_DISPATCHER=local"
 
@@ -50,8 +50,8 @@ gcloud run deploy henry-api \
   --allow-unauthenticated \
   --cpu=1 \
   --memory=512Mi \
-  --min=0 \
-  --max=5 \
+  --min-instances=0 \
+  --max-instances=5 \
   --set-secrets="${COMMON_SECRETS}" \
   --set-env-vars="${COMMON_ENV},HENRY_SERVICE_ROLE=api,HENRY_DISPATCHER=cloud_tasks,HENRY_SERVICE_URL=${WORKER_URL}"
 
