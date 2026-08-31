@@ -128,3 +128,36 @@ Production mode uses Firestore, Cloud Tasks, Google ADK, Gemini 3.5 Flash, a pub
 See [cloud-backend/docs/architecture.md](cloud-backend/docs/architecture.md) for runtime topology and [cloud-backend/docs/legacy-migration.md](cloud-backend/docs/legacy-migration.md) for the boundary between preserved legacy features and the focused Cloud mission slice.
 
 When workflow testing is complete, follow [cloud-backend/docs/google-oauth.md](cloud-backend/docs/google-oauth.md) to connect the real demo Calendar without building unnecessary multi-user account linking.
+
+## Host the dashboard on Cloudflare Workers
+
+The dashboard, showcase route, and deterministic TypeScript mission API run together on Cloudflare Workers. The Python/Google Cloud backend remains optional and can be connected later through server-side environment variables.
+
+### Deploy from your computer
+
+```bash
+npm ci
+npx wrangler login
+npm run deploy
+```
+
+Wrangler prints the public `https://henry-taskmaster.<account>.workers.dev` URL after deployment.
+
+### Deploy continuously from GitHub
+
+1. In Cloudflare, open **Workers & Pages → Create application → Import a repository**.
+2. Select this repository and keep the root directory as `/`.
+3. Set the build command to `npm run build`.
+4. Set the deploy command to `npx wrangler deploy`.
+5. Deploy. No environment variables are required for the deterministic demo.
+
+To forward the dashboard to a separately deployed FastAPI service, add these Worker variables in Cloudflare instead of committing them:
+
+```dotenv
+HENRY_CLOUD_API_URL=https://your-api.example.com
+HENRY_CLOUD_API_KEY=your-backend-api-key
+HENRY_CLOUD_OWNER_ID=dashboard-owner
+```
+
+Keep `HENRY_CLOUD_API_KEY`, Google OAuth credentials, Gemini keys, and token JSON in Cloudflare Secrets or Google Secret Manager—never in GitHub.
+
