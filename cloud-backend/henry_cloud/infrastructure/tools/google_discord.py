@@ -20,15 +20,16 @@ CALENDAR_SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
 class CalendarDiscordWorkflowTools:
     """Cloud-safe versions of the Calendar and Discord tools in henry-play5."""
 
-    def __init__(self, settings: Settings) -> None:
+    def __init__(self, settings: Settings, *, discord_enabled: bool = True) -> None:
         if not settings.google_oauth_token_json:
             raise ValueError("HENRY_GOOGLE_OAUTH_TOKEN_JSON is required for live tools")
-        if not settings.discord_bot_token:
+        if discord_enabled and not settings.discord_bot_token:
             raise ValueError("DISCORD_BOT_TOKEN is required for live tools")
         token_info = json.loads(settings.google_oauth_token_json)
         credentials = Credentials.from_authorized_user_info(token_info, CALENDAR_SCOPES)
         self._calendar = build("calendar", "v3", credentials=credentials, cache_discovery=False)
         self._discord_token = settings.discord_bot_token
+        self._discord_enabled = discord_enabled
         self._contacts: dict[str, str] = {
             name.casefold(): str(user_id)
             for name, user_id in json.loads(settings.contacts_json).items()
@@ -85,6 +86,8 @@ class CalendarDiscordWorkflowTools:
             f"Henry is coordinating a {payload.get('duration_minutes', 30)}-minute review. "
             f"Which option works for you?\n{slot_text}\n\nReply to Henry with your choice."
         )
+        if not self._discord_enabled:
+            return {"recipient": attendee, "status": "simulated", "channel": "dashboard", "action_id": action_id}
         result = await self._send_discord(attendee, message, action_id)
         return {"recipient": attendee, "status": "sent", **result}
 
@@ -131,7 +134,7 @@ class CalendarDiscordWorkflowTools:
         if persisted_start != start.isoformat():
             raise ValueError("Calendar read-back did not match the approved start time")
         confirmation = f"Booked: {body['summary']} on {start.strftime('%A %d %B at %H:%M')}."
-        if attendee.casefold() in self._contacts:
+        if self._discord_enabled and attendee.casefold() in self._contacts:
             await self._send_discord(attendee, confirmation, f"{action_id}-confirm")
         return {
             "calendar_event_id": resolved_event_id,
