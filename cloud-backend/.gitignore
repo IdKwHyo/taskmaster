@@ -1,0 +1,14 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.db
+.gcal_token.json
+.gmail_token.json
+.spotify_token_cache
+credentials.json
+oauth-client*.json
+oauth-token*.json
+client_secret*.json

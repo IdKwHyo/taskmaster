@@ -1,0 +1,9 @@
+from typing import Any, Protocol
+
+
+class WorkflowTools(Protocol):
+    async def check_calendar(self, payload: dict[str, Any], action_id: str) -> dict[str, Any]: ...
+
+    async def contact_attendee(self, payload: dict[str, Any], action_id: str) -> dict[str, Any]: ...
+
+    async def book_and_confirm(self, payload: dict[str, Any], action_id: str) -> dict[str, Any]: ...

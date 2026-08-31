@@ -1,0 +1,1 @@
+"""Mission persistence adapters."""
