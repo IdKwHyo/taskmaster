@@ -1,0 +1,114 @@
+[
+  {
+    "case": "normal",
+    "mode": "baseline",
+    "status": "completed",
+    "provider_calls": 1,
+    "side_effects": 1
+  },
+  {
+    "case": "normal",
+    "mode": "guarded",
+    "status": "completed",
+    "provider_calls": 1,
+    "side_effects": 1
+  },
+  {
+    "case": "wrong_schema",
+    "mode": "baseline",
+    "status": "completed",
+    "provider_calls": 1,
+    "side_effects": 1
+  },
+  {
+    "case": "wrong_schema",
+    "mode": "guarded",
+    "status": "schema_rejected",
+    "provider_calls": 0,
+    "side_effects": 0
+  },
+  {
+    "case": "no_permission",
+    "mode": "baseline",
+    "status": "completed",
+    "provider_calls": 1,
+    "side_effects": 1
+  },
+  {
+    "case": "no_permission",
+    "mode": "guarded",
+    "status": "permission_denied",
+    "provider_calls": 0,
+    "side_effects": 0
+  },
+  {
+    "case": "no_approval",
+    "mode": "baseline",
+    "status": "completed",
+    "provider_calls": 1,
+    "side_effects": 1
+  },
+  {
+    "case": "no_approval",
+    "mode": "guarded",
+    "status": "approval_required",
+    "provider_calls": 0,
+    "side_effects": 0
+  },
+  {
+    "case": "duplicate_delivery",
+    "mode": "baseline",
+    "status": "completed",
+    "provider_calls": 2,
+    "side_effects": 2
+  },
+  {
+    "case": "duplicate_delivery",
+    "mode": "guarded",
+    "status": "completed_cached",
+    "provider_calls": 1,
+    "side_effects": 1
+  },
+  {
+    "case": "lost_ack",
+    "mode": "baseline",
+    "status": "completed",
+    "provider_calls": 2,
+    "side_effects": 2
+  },
+  {
+    "case": "lost_ack",
+    "mode": "guarded",
+    "status": "completed",
+    "provider_calls": 2,
+    "side_effects": 1
+  },
+  {
+    "case": "changed_after_approval",
+    "mode": "baseline",
+    "status": "completed",
+    "provider_calls": 1,
+    "side_effects": 1
+  },
+  {
+    "case": "changed_after_approval",
+    "mode": "guarded",
+    "status": "approval_required",
+    "provider_calls": 0,
+    "side_effects": 0
+  },
+  {
+    "case": "outage",
+    "mode": "baseline",
+    "status": "unknown_needs_reconciliation",
+    "provider_calls": 2,
+    "side_effects": 0
+  },
+  {
+    "case": "outage",
+    "mode": "guarded",
+    "status": "unknown_needs_reconciliation",
+    "provider_calls": 2,
+    "side_effects": 0
+  }
+]
